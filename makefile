@@ -8,10 +8,10 @@ test-pbm:
 	pnmtopng image_test_PBM.pbm > image_test_PBM.png
 	open image_test_PBM.png 
 clean:
-	rm test-headings
-	rm test-pbm
-	rm *.png
-	rm *.pbm
-	rm *.pgm
-	rm *.ppm
-	rm *.pnm
+	rm -f test-headings
+	rm -f test-pbm
+	rm -f *.png
+	rm -f *.pbm
+	rm -f *.pgm
+	rm -f *.ppm
+	rm -f *.pnm

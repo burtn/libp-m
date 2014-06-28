@@ -16,3 +16,25 @@
 #define LEN(x)  (sizeof(x) / sizeof(x[0]))
 
 typedef const char * string_t;
+
+static int constrain(float x, int a, int b)
+{
+	if (x < a)
+	{
+		return a;
+	}
+	
+	if (x > b)
+	{
+		return b;
+	}
+	
+	return floor(x);
+}
+
+static long fileSize(const char* filePath)
+{
+  struct stat stat_buffer;
+  stat(filePath, &stat_buffer);
+  return stata_buffer.st_size;
+}

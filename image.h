@@ -4,7 +4,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 #pragma once
-#include colour.h
+#include "colour.h"
 #define B_ARRAY_TYPE unsigned char
 #define USE_INDEX_0 0
 
@@ -17,11 +17,12 @@ typedef struct Image
 	const char heading;
 } Image;
 
-int image_saveToFile(void * image, const char * filepath);
-int image_getHeight(void * image);
-int image_getWidth(void * image);
-const char * image_getType(void image);
-Image * image_setPixel(int row, int column, Colour * colour);
-Image * image_clearPixel(int row, int column, void * image);
+Image * newImage(int width, int height, const char * type);
+int image_writeToFile(Image * image, const char * filePath);
+int image_getHeight(Image * image);
+int image_getWidth(Image * image);
+const char * image_getType(Image * image);
+Image * image_setPixel(Image * image, int row, int column, Colour * colour);
+Image * image_clearPixel(Image * image, int row, int column);
 const char * image_getBackingArray(void * image);
-void image_prettyPrint(void * image);
+void image_prettyPrint(Image * image);

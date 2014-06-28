@@ -1,5 +1,8 @@
 #pragma once
 
+#include <math.h>
+#include <sys/stat.h>
+
 #define P_BITMAP_ASCII "P1"
 #define P_BITMAP_BINARY "P4"
 #define P_GREYMAP_ASCII	"P2"
@@ -36,5 +39,5 @@ static long fileSize(const char* filePath)
 {
   struct stat stat_buffer;
   stat(filePath, &stat_buffer);
-  return stata_buffer.st_size;
+  return stat_buffer.st_size;
 }

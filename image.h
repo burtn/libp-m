@@ -5,12 +5,16 @@
 */
 #pragma once
 #include colour.h
+#define B_ARRAY_TYPE unsigned char
+#define USE_INDEX_0 0
 
 typedef struct Image
 {
 	int width;
 	int height;
-	const char * backing_array;
+	int size;
+	B_ARRAY_TYPE * backing_array;
+	const char heading;
 } Image;
 
 int image_saveToFile(void * image, const char * filepath);

@@ -1,12 +1,13 @@
 test-headings:
 	gcc headings.c tests_headingsc.c
 	mv a.out test-headings
-test-pbm:
-	gcc image.c headings.c tests_imagec.c
-	mv a.out test-pbm
-	./test-pbm
+test-imagegen:
+	gcc image.c headings.c colour.c tests_imagec.c
+	mv a.out test-imagegen
+	./test-imagegen
 	pnmtopng image_test_PBM.pbm > image_test_PBM.png
-	open image_test_PBM.png 
+	pnmtopng image_test_PGM.pgm > image_test_PGM.png
+	# open *.png
 clean:
 	rm -f test-headings
 	rm -f test-pbm

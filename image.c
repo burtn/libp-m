@@ -25,7 +25,8 @@ Image * newImage(int width, int height, const char * type)
 	image->backing_array = (B_ARRAY_TYPE *) calloc(image->size, 1);
 	image->width = width;
 	image->height = height;
-	image->type = type;
+	image->type = malloc(strlen(type));
+	strcpy(image->type, type);
 	image->white_value = 255;
 	return image;
 }

@@ -16,20 +16,33 @@ int colour_getGreen(Colour * colour)
 {
 	return colour->green;
 }
+
 int colour_getBlue(Colour * colour)
 {
 	return colour->blue;
 }
 
+int colour_getGrey(Colour * colour)
+{
+	return colour_getRed(colour);
+}
+
 Colour * colour_new(int red, int green, int blue)
 {
-	Colour * colour = malloc(sizeof(Colour));
+	Colour * colour = malloc(sizeof(*colour));
 	colour->red = red;
 	colour->green = green;
 	colour->blue = blue;
 	return colour;
 }
 
+Colour * colour_newGrey(int grey)
+{
+	Colour * colour = malloc(sizeof(*colour));
+	colour->red = colour->green = colour->blue = grey;
+	return colour;
+}
+	
 void colour_delete(Colour * colour)
 {
 	free(colour);

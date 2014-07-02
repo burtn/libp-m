@@ -22,9 +22,17 @@ Image * newImage(int width, int height, const char * type)
 	{
 		image->size = 3 * (width * height);
 	}
-	image->backing_array = malloc(sizeof(image->size));
+	image->backing_array = (B_ARRAY_TYPE *) calloc(image->size, 1);
 	image->width = width;
 	image->height = height;
+	image->type = type;
+	image->white_value = 255;
+	return image;
+}
+
+Image * image_makeGreyscale(Image * image, int white)
+{
+	image->white_value = white;
 	return image;
 }
 
@@ -35,14 +43,37 @@ Image * image_setPixel(Image * image, int row, int column, Colour * colour)
 		row--;
 		column--;
 	}
-	int bytesPerRow = ceil(image->width/8.0);
-	image->backing_array[((row * bytesPerRow) + (column / 8))] |= (0x80 >> (column % 8));
+	if (strcmp(image->type, P_BITMAP_BINARY) == 0)
+	{
+		int bytesPerRow = ceil(image->width/8.0);
+		image->backing_array[((row * bytesPerRow) + (column / 8))] |= (0x80 >> (column % 8));
+		return image;
+	}
+	if (strcmp(image->type, P_GREYMAP_BINARY) == 0)
+	{
+		image->backing_array[((row * image->width) + column)] = constrain(colour_getGrey(colour), 0, image->white_value);
+		return image;
+	}
 	return image;
 }
 
 Image * image_clearPixel(Image * image, int row, int column)
 {
-	image->backing_array[((row * image->width) + column)/8] |= (0x7F >> (((row * image->width) + column) %8));
+	if (!USE_INDEX_0)
+	{
+		row--;
+		column--;
+	}
+	if (strcmp(image->type, P_BITMAP_BINARY) == 0)
+	{
+		image->backing_array[((row * image->width) + column)/8] |= (0x7F >> (((row * image->width) + column) %8));
+		return image;
+	}
+	if (strcmp(image->type, P_GREYMAP_BINARY) == 0)
+	{
+		image->backing_array[((row * image->width) + column)] = 0x00;
+		return image;
+	}
 	return image;
 }
 
@@ -50,7 +81,16 @@ int image_writeToFile(Image * image, const char * filePath)
 {
 	FILE *outputFile = fopen(filePath, "w");
 	int bytesWritten = 1;
-	fputs(getPBMHeader(BINARY, image->width, image->height), outputFile);
+	
+	if (strcmp(image->type, P_BITMAP_BINARY) == 0)
+	{
+		fputs(getPBMHeader(BINARY, image->width, image->height), outputFile);
+	}
+	if (strcmp(image->type, P_GREYMAP_BINARY) == 0)
+	{
+		fputs(getPGMHeader(BINARY, image->width, image->height, image->white_value), outputFile);
+	}
+	
 	bytesWritten = fwrite(image->backing_array, 1, image->size, outputFile);
 	putc(0, outputFile);
 	fclose(outputFile);

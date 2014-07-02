@@ -14,7 +14,8 @@ typedef struct Image
 	int height;
 	int size;
 	B_ARRAY_TYPE * backing_array;
-	const char heading;
+	const char * type;
+	int white_value;
 } Image;
 
 Image * newImage(int width, int height, const char * type);
@@ -26,3 +27,4 @@ Image * image_setPixel(Image * image, int row, int column, Colour * colour);
 Image * image_clearPixel(Image * image, int row, int column);
 const char * image_getBackingArray(void * image);
 void image_prettyPrint(Image * image);
+Image * image_makeGreyscale(Image * image, int white);

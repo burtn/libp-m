@@ -20,7 +20,7 @@
 
 typedef const char * string_t;
 
-static int constrain(float x, int a, int b)
+static int constrain(int x, int a, int b)
 {
 	if (x < a)
 	{

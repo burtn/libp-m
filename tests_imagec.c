@@ -24,7 +24,15 @@ int main()
 	image_setPixel(myPGMImage, 3, 3, colour_newGrey(70));
 	image_setPixel(myPGMImage, 4, 4, colour_newGrey(80));
 	image_setPixel(myPGMImage, 5, 5, colour_newGrey(90));
-	
 	image_writeToFile(myPGMImage, "image_test_PGM.pgm");
+	
+	printf("Generating PGM...\n");
+	Image * myPPMImage = newImage(5, 5, P_PIXMAP_BINARY);
+	image_setPixel(myPPMImage, 1, 1, colour_newRGB(17, 47, 65));
+	image_setPixel(myPPMImage, 2, 2, colour_newRGB(6, 133, 135));
+	image_setPixel(myPPMImage, 3, 3, colour_newRGB(79, 185, 159));
+	image_setPixel(myPPMImage, 4, 4, colour_newRGB(242, 177, 52));
+	image_setPixel(myPPMImage, 5, 5, colour_newRGB(237, 85, 59));
+	image_writeToFile(myPPMImage, "image_test_PPM.ppm");
 
 }

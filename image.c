@@ -54,6 +54,13 @@ Image * image_setPixel(Image * image, int row, int column, Colour * colour)
 		image->backing_array[((row * image->width) + column)] = constrain(colour_getGrey(colour), 0, image->white_value);
 		return image;
 	}
+	if (strcmp(image->type, P_PIXMAP_BINARY) == 0)
+	{
+		image->backing_array[(3 * row * image->width) + (column * 3)] = constrain(colour_getRed(colour), 0, 255);
+		image->backing_array[(3 * row * image->width) + (column * 3) + 1] = constrain(colour_getGreen(colour), 0, 255);
+		image->backing_array[(3 * row * image->width) + (column * 3) + 2] = constrain(colour_getBlue(colour), 0, 255);
+		return image;
+	}
 	return image;
 }
 
@@ -89,6 +96,10 @@ int image_writeToFile(Image * image, const char * filePath)
 	if (strcmp(image->type, P_GREYMAP_BINARY) == 0)
 	{
 		fputs(getPGMHeader(BINARY, image->width, image->height, image->white_value), outputFile);
+	}
+	if (strcmp(image->type, P_PIXMAP_BINARY) == 0)
+	{
+		fputs(getPPMHeader(BINARY, image->width, image->height), outputFile);
 	}
 	
 	bytesWritten = fwrite(image->backing_array, 1, image->size, outputFile);

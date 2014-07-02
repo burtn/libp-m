@@ -27,7 +27,7 @@ int colour_getGrey(Colour * colour)
 	return colour_getRed(colour);
 }
 
-Colour * colour_new(int red, int green, int blue)
+Colour * colour_newRGB(int red, int green, int blue)
 {
 	Colour * colour = malloc(sizeof(*colour));
 	colour->red = red;

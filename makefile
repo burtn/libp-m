@@ -10,7 +10,7 @@ test-imagegen:
 	# open *.png
 clean:
 	rm -f test-headings
-	rm -f test-pbm
+	rm -f test-imagegen
 	rm -f *.png
 	rm -f *.pbm
 	rm -f *.pgm
